@@ -38,9 +38,42 @@ var UserSchema = new Schema({
     }
   }
 })
+var IndexChildSchema = new Schema({
+        hp_title:{type:String},
+    hp_author:{type:String},
+    hp_content:{type:String},
+    hp_makettime:{type:String},
+    })
+var IndexSchema = new Schema({
+	id: {
+    unique: true,
+    type: String
+  },
+  vols:[IndexChildSchema],
+  meta: {
+    createAt: {
+      type: Date,
+      dafault: Date.now()
+    },
+    updateAt: {
+      type: Date,
+      dafault: Date.now()
+    }
+  }
+})
+
 
 // Defines a pre hook for the document.
 UserSchema.pre('save', function(next) {
+  if (this.isNew) {
+    this.meta.createAt = this.meta.updateAt = Date.now()
+  }
+  else {
+    this.meta.updateAt = Date.now()
+  }
+  next()
+})
+IndexSchema.pre('save', function(next) {
   if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now()
   }
@@ -58,8 +91,13 @@ UserSchema.pre('save', function(next) {
  */
 // 参数User 数据库中的集合名称, 不存在会创建.
 var User = mongoose.model('User', UserSchema)
+var IndexChildSchema = mongoose.model('IndexChildSchema', IndexChildSchema)
+var Index = mongoose.model('Index', IndexSchema)
 
 module.exports = User
+module.exports = Index
+module.exports = IndexChildSchema
+
 
 /**
  * nodejs中文社区这篇帖子对mongoose的用法总结的不错：https://cnodejs.org/topic/548e54d157fd3ae46b233502

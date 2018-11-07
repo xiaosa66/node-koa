@@ -2,6 +2,7 @@
 
 var mongoose =  require('mongoose')
 var User = mongoose.model('User')
+var Index = mongoose.model('Index')
 
 /**
  * 通过电话号码查询
@@ -38,6 +39,18 @@ exports.findAllUsers = async () => {
 	})
 	return res
 }
+exports.returnIndexData = async () => {
+	var query = Index.find({});
+	var res = []
+	await query.exec(function(err, users) {
+		if(err) {
+			res = []
+		}else {
+			res = users;
+		}
+	})
+	return res
+}
 
 /**
  * 增加用户
@@ -45,9 +58,14 @@ exports.findAllUsers = async () => {
  * @return {[type]}      [description]
  */
 exports.addUser = async (user) => {
-	user = await user.save()
-	return user
+    user = await user.save()
+    return user
 }
+exports.addIndex = async (index) => {
+    index = await index.save()
+    return index
+}
+
 
 /**
  * 删除用户

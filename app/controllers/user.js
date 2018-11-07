@@ -3,6 +3,9 @@
 var xss = require('xss')
 var mongoose =  require('mongoose')
 var User = mongoose.model('User')
+var Index = mongoose.model('Index')
+var IndexChildSchema = mongoose.model('IndexChildSchema')
+
 var uuid = require('uuid')
 // var userHelper = require('../dbhelper/userHelper')
 import userHelper from '../dbhelper/userHelper'
@@ -120,14 +123,22 @@ exports.update = async (ctx, next) => {
  */
 exports.users = async (ctx, next) => {
   var data = await userHelper.findAllUsers()
-  // var obj = await userHelper.findByPhoneNumber({phoneNumber : '13525584568'})
-  // console.log('obj=====================================>'+obj)
-  
+
   ctx.body = {
     success: true,
     data
   }
 }
+exports.getIndex = async (ctx, next) => {
+  var data = await userHelper.returnIndexData()
+
+  ctx.body = {
+    success: true,
+    data
+  }
+}
+
+
 exports.addUser = async (ctx, next) => {
   var user = new User({
       nickname: '测试用户',
@@ -141,6 +152,25 @@ exports.addUser = async (ctx, next) => {
     ctx.body = {
       success: true,
       data : user2
+    }
+  }
+}
+exports.addIndex = async (ctx, next) => {
+    let vols = new IndexChildSchema({
+        hp_title:'我是标题',
+        hp_author:'我是作者',
+        hp_content:'我是内容',
+        hp_makettime:'我是时间',
+    })
+  var index = new Index({
+        id:'112233',
+        vols:vols
+    })
+  var didIndexSaved =  await userHelper.addUser(index)
+  if(didIndexSaved){
+    ctx.body = {
+      success: true,
+      data : didIndexSaved
     }
   }
 }
