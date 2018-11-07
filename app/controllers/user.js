@@ -53,35 +53,23 @@ exports.signup = async (ctx, next) => {
 
 }
 exports.findSb = async (ctx, next) => {
-  // console.log('ctx',ctx);
-  // console.log('ctx.request',ctx.request);
-  // console.log('ctx.request.body',ctx.request.body);
-  // console.log('ctx.request.body.number',ctx.request.body.phoneNumber);
   var phoneNumber = xss(ctx.request.body.phoneNumber)
 	// var phoneNumber = xss(ctx.request.body.phoneNumber.trim())
 	var user = await User.findOne({
 	  phoneNumber: phoneNumber
 	}).exec()
   console.log(user)
-	
-	if (!user) {
-	}
-	else {
-	}
-
-	// try {
-  //   user = await user.save()
-  //   ctx.body = {
-  //     success: true
-  //   }
-  // }
-  // catch (e) {
-  //   ctx.body = {
-  //     success: false
-  //   }
-
-  //   return next
-  // }
+	try {
+    ctx.body = {
+      success: true,
+      user
+    }
+  }
+  catch (e) {
+    ctx.body = {
+      success: false
+    }
+  }
 
 }
 
