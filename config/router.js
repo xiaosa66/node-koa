@@ -17,6 +17,7 @@ module.exports = function(){
   router.get('/test/user/users',User.users)
   router.post('/test/user/add',User.addUser)
   router.post('/test/user/delete',User.deleteUser)
+  router.post('/test/user/findsb',User.findSb)
 
   return router
 }

@@ -13,7 +13,8 @@ import userHelper from '../dbhelper/userHelper'
  * @yield {[type]}   [description]
  */
 exports.signup = async (ctx, next) => {
-	var phoneNumber = xss(ctx.request.body.phoneNumber.trim())
+	var phoneNumber = xss(ctx.request.body.phoneNumber)
+	// var phoneNumber = xss(ctx.request.body.phoneNumber.trim())
 	var user = await User.findOne({
 	  phoneNumber: phoneNumber
 	}).exec()
@@ -51,6 +52,41 @@ exports.signup = async (ctx, next) => {
   }
 
 }
+exports.findSb = async (ctx, next) => {
+  // console.log('ctx',ctx);
+  // console.log('ctx.request',ctx.request);
+  // console.log('ctx.request.body',ctx.request.body);
+  // console.log('ctx.request.body.number',ctx.request.body.phoneNumber);
+  var phoneNumber = xss(ctx.request.body.phoneNumber)
+	// var phoneNumber = xss(ctx.request.body.phoneNumber.trim())
+	var user = await User.findOne({
+	  phoneNumber: phoneNumber
+	}).exec()
+  console.log(user)
+	
+	if (!user) {
+	}
+	else {
+	}
+
+	// try {
+  //   user = await user.save()
+  //   ctx.body = {
+  //     success: true
+  //   }
+  // }
+  // catch (e) {
+  //   ctx.body = {
+  //     success: false
+  //   }
+
+  //   return next
+  // }
+
+}
+
+
+
 
 /**
  * 更新用户信息操作
@@ -65,7 +101,8 @@ exports.update = async (ctx, next) => {
 
   fields.forEach(function(field) {
     if (body[field]) {
-      user[field] = xss(body[field].trim())
+      user[field] = xss(body[field])
+      // user[field] = xss(body[field].trim())
     }
   })
 
@@ -120,7 +157,8 @@ exports.addUser = async (ctx, next) => {
   }
 }
 exports.deleteUser = async (ctx, next) => {
-  const phoneNumber = xss(ctx.request.body.phoneNumber.trim())
+  const phoneNumber = xss(ctx.request.body.phoneNumber)
+  // const phoneNumber = xss(ctx.request.body.phoneNumber.trim())
   console.log(phoneNumber)
   var data  = await userHelper.deleteUser({phoneNumber})
   ctx.body = {
