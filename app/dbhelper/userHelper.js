@@ -2,7 +2,7 @@
 
 var mongoose =  require('mongoose')
 var User = mongoose.model('User')
-var Index = mongoose.model('Index')
+var IndexChildSchema = mongoose.model('IndexChildSchema')
 
 /**
  * 通过电话号码查询
@@ -40,7 +40,7 @@ exports.findAllUsers = async () => {
 	return res
 }
 exports.returnIndexData = async () => {
-	var query = Index.find({});
+	var query = IndexChildSchema.find({});
 	var res = []
 	await query.exec(function(err, users) {
 		if(err) {

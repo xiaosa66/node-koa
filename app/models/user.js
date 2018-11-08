@@ -43,6 +43,16 @@ var IndexChildSchema = new Schema({
     hp_author:{type:String},
     hp_content:{type:String},
     hp_makettime:{type:String},
+    meta: {
+      createAt: {
+        type: Date,
+        dafault: Date.now()
+      },
+      updateAt: {
+        type: Date,
+        dafault: Date.now()
+      }
+    }
     })
 var IndexSchema = new Schema({
 	id: {
@@ -74,6 +84,15 @@ UserSchema.pre('save', function(next) {
   next()
 })
 IndexSchema.pre('save', function(next) {
+  if (this.isNew) {
+    this.meta.createAt = this.meta.updateAt = Date.now()
+  }
+  else {
+    this.meta.updateAt = Date.now()
+  }
+  next()
+})
+IndexChildSchema.pre('save', function(next) {
   if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now()
   }

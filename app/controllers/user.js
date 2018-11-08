@@ -156,21 +156,20 @@ exports.addUser = async (ctx, next) => {
   }
 }
 exports.addIndex = async (ctx, next) => {
+  console.log('ctx.request.body:',ctx.request.body);
+  let body = ctx.request.body;
     let vols = new IndexChildSchema({
-        hp_title:'我是标题',
-        hp_author:'我是作者',
-        hp_content:'我是内容',
-        hp_makettime:'我是时间',
+        hp_title:body.hp_title,
+        hp_author:body.hp_author,
+        hp_content:body.hp_content,
+        hp_makettime:body.hp_makettime,
     })
-  var index = new Index({
-        id:'112233',
-        vols:vols
-    })
-  var didIndexSaved =  await userHelper.addUser(index)
-  if(didIndexSaved){
+
+  var dataSAve =  await userHelper.addUser(vols)
+  if(dataSAve){
     ctx.body = {
       success: true,
-      data : didIndexSaved
+      data : dataSAve
     }
   }
 }
