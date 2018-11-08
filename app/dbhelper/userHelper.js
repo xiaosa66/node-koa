@@ -39,6 +39,9 @@ exports.findAllUsers = async () => {
 	})
 	return res
 }
+/**
+ * 返回首页所有内容
+ */
 exports.returnIndexData = async () => {
 	var query = IndexChildSchema.find({});
 	var res = []
