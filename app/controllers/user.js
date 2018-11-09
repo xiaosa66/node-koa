@@ -173,6 +173,16 @@ exports.addIndex = async (ctx, next) => {
     }
   }
 }
+exports.deleteIndexById = async (ctx, next) => {
+  const id = ctx.request.body.id;
+  // const phoneNumber = xss(ctx.request.body.phoneNumber.trim())
+  console.log('gonna delete IndexData ===========>',id);
+  var data  = await userHelper.deleteIndex({_id})
+  ctx.body = {
+    success: true,
+    data
+  }
+}
 exports.deleteUser = async (ctx, next) => {
   const phoneNumber = xss(ctx.request.body.phoneNumber)
   // const phoneNumber = xss(ctx.request.body.phoneNumber.trim())

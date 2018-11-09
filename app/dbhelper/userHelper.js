@@ -71,6 +71,26 @@ exports.addIndex = async (index) => {
 
 
 /**
+ * 删除首页数据
+ * @param  {[type]} options.id [description]
+ * @return {[type]}                     [description]
+ */
+exports.deleteUser = async ({id}) => {
+	var flag = false
+	console.log('flag==========>'+flag)
+	await User.remove({id}, function(err) {
+		if(err) {
+			flag = false
+			// return false
+		}else{
+			flag = true
+		}
+		
+	})
+	console.log('flag=====await=====>'+flag)
+	return flag
+}
+/**
  * 删除用户
  * @param  {[type]} options.phoneNumber [description]
  * @return {[type]}                     [description]
