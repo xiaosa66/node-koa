@@ -14,9 +14,10 @@ module.exports = function(){
   router.post('/u/update', App.hasBody, App.hasToken, User.update)
 
   // DB Interface test
-  router.get('/hp/idlist/0',User.getIndex)
-  router.get('/movie/list/0',User.getIndex)
-  router.post('/hp/idlist/add',User.addIndex)
+  router.get('/index/0',User.getIndex)
+  router.get('/movie/0',User.getIndex)
+  router.post('/index/add',User.addIndex)
+  router.post('/index/delete',User.deleteIndexById)
   router.post('/test/user/add',User.addUser)
   router.post('/test/user/delete',User.deleteUser)
   router.post('/test/user/findsb',User.findSb)
